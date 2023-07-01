@@ -11,12 +11,27 @@ from LISTS import LIST_OF_UP1, LIST_TO_TOP, LIST_TO_PUSHUP7
 from telebot import types
 import clipboard
 import keyboard
+import tkinter as tk
+
+root = tk.Tk()
+screen_width = root.winfo_screenwidth()
+screen_height = root.winfo_screenheight()
+root.destroy()
+
+if screen_width == 1920 and screen_height == 1080:
+    address_bar_position = (400, 47)
+    first_button = (1500, 970)
+    second_button = (1500, 870)
+    variable2 = "Другое значение для разрешения 1920x1080"
+elif screen_width == 1366 and screen_height == 768:
+    address_bar_position = (700, 53)
+    first_button = (1150, 670)
+    second_button = (1150, 670)
 
 
-TOKEN = '6036199280:AAF4DdHQ8unlsJiecGtrDyHKRflFYIxDkF4'
+TOKEN = '6323579647:AAEwnkuMPpd8c4aIbZDLeFBC5loaGn6Tc_4'
 CHAT_ID = -1001911928428
 bot = telebot.TeleBot(TOKEN)
-address_bar_position = (400, 47)
 
 @bot.message_handler(commands=['up1'])
 def start_up1(message):
@@ -53,17 +68,25 @@ def start_up1(message):
             if item[1] == int(extracted_id):
                 doors_model = item[0]
         webbrowser.open_new(link)
-        pyautogui.sleep(10)
+        pyautogui.sleep(20)
         pyautogui.hotkey('f5')
+        pyautogui.sleep(5)
         pyautogui.scroll(-2000)
-        pyautogui.sleep(4)
-        pyautogui.moveTo(x=1500, y=875)
-        pyautogui.sleep(4)
+        pyautogui.sleep(5)
+        pyautogui.moveTo(second_button)
+        pyautogui.sleep(5)
         pyautogui.click()
-        pyautogui.sleep(4)
-        pyautogui.moveTo(x=1500, y=875)
+        pyautogui.sleep(5)
+        pyautogui.moveTo(second_button)
         pyautogui.click()
-        pyautogui.hotkey('ctrl', 'w')
+        pyautogui.sleep(0.5)
+        keyboard.press('ctrl')
+        keyboard.press('w')
+        pyautogui.sleep(0.5)
+        keyboard.release('ctrl')
+        keyboard.release('w')
+
+        pyautogui.sleep(0.5)
         
         date_time = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
         total += 1
@@ -114,39 +137,46 @@ def start_top_all(message):
                 doors_model = item[0]
                 
         webbrowser.open_new(link)
-        pyautogui.sleep(10)
+        pyautogui.sleep(20)
         pyautogui.scroll(-2000)
-        pyautogui.sleep(9)
-        pyautogui.moveTo(x=1500, y=970)
-        pyautogui.sleep(2)
+        pyautogui.sleep(5)
+        pyautogui.moveTo(first_button)
+        pyautogui.sleep(5)
         pyautogui.click()
-        pyautogui.sleep(8)
+        pyautogui.sleep(5)
         pyautogui.moveTo(address_bar_position)
-        pyautogui.sleep(1)
+        pyautogui.sleep(5)
         pyautogui.click()
-        pyautogui.sleep(0.5)
+        pyautogui.sleep(1)
         keyboard.press('ctrl')
         keyboard.press('a')
-        pyautogui.sleep(0.5)
-        keyboard.release('a')
         keyboard.release('ctrl')
+        keyboard.release('a')
         pyautogui.sleep(0.5)
         keyboard.press('ctrl')
         keyboard.press('c')
-        pyautogui.sleep(0.5)
-        keyboard.release('c')
         keyboard.release('ctrl')
+        keyboard.release('c')
         clipboard_content = clipboard.paste()
+        pyautogui.moveTo(first_button)
         
         if clipboard_content != link: 
-            pyautogui.moveTo(x=1500, y=875)
+            pyautogui.moveTo(second_button)
             pyautogui.scroll(-2000)
-            pyautogui.sleep(2)
+            pyautogui.sleep(5)
             pyautogui.click()
-            pyautogui.sleep(2)
-            pyautogui.click(x=1500, y=875)
-            pyautogui.sleep(1)
-            pyautogui.hotkey('ctrl', 'w')
+            pyautogui.sleep(5)
+            pyautogui.click(second_button)
+            pyautogui.sleep(5)
+            pyautogui.click()
+            pyautogui.sleep(0.5)
+            keyboard.press('ctrl')
+            keyboard.press('w')
+            pyautogui.sleep(0.5)
+            keyboard.release('ctrl')
+            keyboard.release('w')
+            pyautogui.sleep(0.5)
+        
             date_time = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
             message = f'\u2705 {doors_model} піднялися у топ!\n {date_time}'
             bot.send_message(-1001911928428, message)
@@ -157,7 +187,13 @@ def start_top_all(message):
             date_time = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
             message = f'\u274C Ще в топі {doors_model}\n {date_time}'
             bot.send_message(-1001911928428, message)
-            pyautogui.hotkey('ctrl', 'w')
+            pyautogui.click()
+            pyautogui.sleep(0.5)
+            keyboard.press('ctrl')
+            keyboard.press('w')
+            pyautogui.sleep(0.5)
+            keyboard.release('ctrl')
+            keyboard.release('w')
             time.sleep(20) 
             sum_of_bad += 1 
         sum_of_road += 1
@@ -195,7 +231,6 @@ def start_up7(message):
 
     sum_of_road = 0
     sum_of_succes = 0
-    sum_of_bad = 0
     
     for i in range(len(LIST_TO_PUSHUP7)):
         link = LIST_TO_PUSHUP7[i]
@@ -208,22 +243,25 @@ def start_up7(message):
                 doors_model = item[0]
                 
         webbrowser.open_new(link)
-        pyautogui.sleep(10)
+        pyautogui.sleep(20)
         pyautogui.scroll(-2000)
-        pyautogui.sleep(2)
-        pyautogui.moveTo(x=1500, y=970)
-        pyautogui.sleep(2)
+        pyautogui.sleep(5)
+        pyautogui.moveTo(first_button)
+        pyautogui.sleep(5)
         pyautogui.click()
         pyautogui.sleep(8)
-        pyautogui.moveTo(x=1500, y=875)
-        pyautogui.sleep(1)
+        pyautogui.scroll(-2000)
+        pyautogui.moveTo(second_button)
+        pyautogui.sleep(5)
         pyautogui.click()
-        pyautogui.sleep(1)
-        pyautogui.sleep(2)
-        pyautogui.click(x=1500, y=875)
+        pyautogui.sleep(5)
+        pyautogui.click(second_button)
         pyautogui.sleep(0.5)
-        pyautogui.hotkey('ctrl', 'w')
-        pyautogui.sleep(2)
+        keyboard.press('ctrl')
+        keyboard.press('w')
+        keyboard.release('ctrl')
+        keyboard.release('w')
+        pyautogui.sleep(5)
         
         date_time = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
         message = f'\u2705 7 поднятий оплаченн для\n{doors_model}\n {date_time}'
